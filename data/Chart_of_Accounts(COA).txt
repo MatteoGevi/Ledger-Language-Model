@@ -1,0 +1,106 @@
+Chart of Accounts
+Assets
+1000 - Cash and Cash Equivalents
+1001 - Main Bank Account - EUR
+1002 - Main Bank Account - USD
+1003 - Petty Cash
+1004 - Client Escrow Account
+1100 - Accounts Receivable
+1101 - Trade Receivables - Domestic
+1102 - Trade Receivables - International
+1103 - Allowance for Doubtful Accounts
+1200 - Prepaid Expenses
+1201 - Prepaid Rent
+1202 - Prepaid Insurance
+1203 - Prepaid Software Subscriptions
+1300 - Fixed Assets
+1301 - Office Equipment
+1302 - Computers and IT Equipment
+1303 - Accumulated Depreciation - Office Equipment
+1400 - Intangible Assets
+1401 - Goodwill
+1402 - Intellectual Property
+1403 - Accumulated Amortization - Intellectual Property
+1500 - Input VAT (Reimbursable VAT)
+1501-EUR - Input VAT - Domestic (EUR)
+1501-USD - Input VAT - Domestic (USD)
+1502-EUR - Input VAT - International (EUR)
+1502-USD - Input VAT - International (USD)
+Liabilities
+2000 - Accounts Payable
+2001 - Trade Payables - Domestic
+2002 - Trade Payables - International
+2003 - Accrued Expenses
+2100 - VAT Payable
+2101-EUR - VAT Payable - Domestic (EUR)
+2101-USD - VAT Payable - Domestic (USD)
+2102-EUR - VAT Payable - International (EUR)
+2102-USD - VAT Payable - International (USD)
+2200 - Short-Term Loans
+2201 - Bank Overdraft
+2202 - Current Portion of Long-Term Debt
+2300 - Deferred Revenue
+2301 - Deferred Revenue - Subscription Services
+2302 - Deferred Revenue - Consulting Services
+Equity
+3000 - Common Stock
+3001 - Issued Common Stock
+3100 - Additional Paid-In Capital
+3200 - Retained Earnings
+3201 - Retained Earnings - Current Year
+3202 - Retained Earnings - Prior Year
+Revenue
+4000 - Revenue
+4001 - Revenue - Digital Marketing Services
+4002 - Revenue - Subscription Services
+4003 - Revenue - Consulting Services
+4004 - Revenue - Training and Workshops
+4005 - Revenue - Other (Specify)
+4100 - Other Income
+4101 - Interest Income
+4102 - Gain on Sale of Assets
+Expenses
+5000 - Cost of Goods Sold (COGS)
+5001-Marketing - COGS - Software Subscriptions (Marketing)
+5002-Marketing - COGS - Advertising Expenses (Marketing)
+5003-Marketing - COGS - Content Creation (Marketing)
+5001-Sales - COGS - Software Subscriptions (Sales)
+5002-Sales - COGS - Advertising Expenses (Sales)
+5003-Sales - COGS - Content Creation (Sales)
+5100 - Payroll Expenses
+5101-Marketing - Salaries and Wages (Marketing)
+5102-HR - Salaries and Wages (HR)
+5103-IT - Salaries and Wages (IT)
+5104-Marketing - Employee Benefits (Marketing)
+5105-HR - Employee Benefits (HR)
+5106-IT - Employee Benefits (IT)
+5107-Marketing - Payroll Taxes (Marketing)
+5108-HR - Payroll Taxes (HR)
+5109-IT - Payroll Taxes (IT)
+5200 - Office Expenses
+5201-HQ - Rent (Headquarters)
+5202-HQ - Utilities (Headquarters)
+5203-HQ - Office Supplies (Headquarters)
+5300 - Marketing and Advertising Expenses
+5301-Marketing - Paid Advertising (Marketing)
+5302-Marketing - Promotional Materials (Marketing)
+5303-Marketing - Events and Conferences (Marketing)
+5400 - Technology Expenses
+5401-IT - Software Subscriptions (IT)
+5402-IT - IT Support and Maintenance (IT)
+5403-IT - Hosting Services (IT)
+5500 - Professional Services
+5501-Legal - Legal Fees (Legal)
+5502-Accounting - Accounting and Audit Fees (Accounting)
+5503-Consulting - Consulting Fees (Consulting)
+5600 - Amortization and Depreciation
+5601 - Depreciation - Office Equipment
+5602 - Amortization - Intellectual Property
+Amortization and Accruals
+6000 - Amortization Schedule
+6001 - Amortization - Prepaid Expenses
+6002 - Amortization - Intangible Assets
+6100 - Accruals
+6101 - Accrued Payroll
+6102 - Accrued Taxes
+6103 - Accrued Vendor Payments
