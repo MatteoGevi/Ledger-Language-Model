@@ -46,7 +46,7 @@ To run the test locally, you can run the following command in your Terminal insi
 poetry run pytest test/test_agent.py
 ```
 
-For each test case, detailed logs are generated, providing insights into the behavior of the system. The logs include:
+For each test case, detailed logs are generated, providing insights into the behavior of the system.
 
 # Final Considerations
 This use case comes in handy since there are no Zero Shot models available on Hugging Face to assess invoices and insert them in journal entry respecting the German CAAP. 
