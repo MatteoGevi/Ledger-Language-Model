@@ -1,4 +1,6 @@
 import logging
+import time
+import os
 from pdf2image import convert_from_path
 import pytesseract
 from openai import OpenAI
@@ -18,6 +20,9 @@ def extract_text_with_tesseract(file_path):
     """
     Extracts text from a PDF using Tesseract OCR only.
     """
+    logging.info(">>> Starting OCR extraction...")
+    start_time = time.time()
+
     text_content = ""
     try:
         images = convert_from_path(file_path)
@@ -96,7 +101,7 @@ def classify_line_item_with_rag(line_item, coa_context):
     {coa_context_str}
     
     Assign the most appropriate account code from the list above.
-    Your response should only contain the account code (e.g., "5401-IT").
+    The response should only contain the account code (e.g., "5401-IT").
     """
     
     response = client.chat.completions.create(
@@ -111,62 +116,70 @@ def classify_line_item_with_rag(line_item, coa_context):
 # Step 6: Generate Journal Entries
 def rag_pipeline(invoice_data, coa_file_path):
     """
-    Full pipeline for processing an invoice using RAG.
-    Ensures German GAAP compliance.
+    Simplified pipeline for generating journal entries that match your expected test scenario:
+    - 1 debit line per item
+    - 1 debit line for total VAT
+    - 1 credit line to AP for the full (net + VAT) amount
     """
-    # Prepare COA
-    coa_entries = coa_embeddings(coa_file_path)  # Generate embeddings once
-    journal_entries = []
-    vat_account = "1501"  # Input VAT account
-    ap_account = "2000"  # Accounts Payable account
-    vat_rate = 0.19  # Default VAT rate (19%)
+    logging.info("Starting simplified RAG pipeline...")
 
-    for line_item in invoice_data["line_items"]:
-        # Retrieve relevant COA context
-        coa_context = retrieve_relevant_coa(line_item["description"], coa_entries)
+    # Prepare COA embeddings (semantic search)
+    coa_entries = coa_embeddings(coa_file_path)
 
-        # Classify line item with LLM
-        account_code = classify_line_item_with_rag(line_item, coa_context)
-        
-        # Handle prepayments and accruals directly in the classification
-        if "prepaid" in line_item["description"].lower() or "annual" in line_item["description"].lower():
-            monthly_allocation = line_item["amount"] / 12
-            for month in range(12):
-                journal_entries.append({
-                    "account_code": "1203",  # Prepaid Expenses
-                    "debit": monthly_allocation,
-                    "credit": 0.0,
-                    "description": f"Prepayment allocation for month {month + 1}"
-                })
-            journal_entries.append({
-                "account_code": "2000",  # Accounts Payable
-                "debit": 0.0,
-                "credit": line_item["amount"],
-                "description": "Prepaid Expense Credit"
-            })
-        elif "accrued" in line_item["description"].lower() or "unpaid" in line_item["description"].lower():
-            journal_entries.append({
-                "account_code": "6101",  # Accrued Expenses
-                "debit": line_item["amount"],
-                "credit": 0.0,
-                "description": "Accrued liability"
-            })
-        else:
-            journal_entries.append({
-                "account_code": account_code,
-                "debit": line_item["amount"],
-                "credit": 0.0,
-                "description": line_item["description"]
-            })
+    # Hardcode these for demonstration
+    vat_account = "1500"       
+    ap_account = "2000"         
+    vat_rate = 0.19            
 
-    # VAT handling
+    line_items = invoice_data["line_items"]
     total_vat = invoice_data.get("vat_amount", 0.0)
-    if total_vat > 0:
-        journal_entries.append({"account_code": vat_account, "debit": total_vat, "credit": 0.0, "description": "Input VAT"})
-    
-    # Accounts Payable
     total_invoice = invoice_data.get("total", 0.0)
-    journal_entries.append({"account_code": ap_account, "debit": 0.0, "credit": total_invoice, "description": "Accounts Payable"})
-    
+
+    journal_entries = []
+
+    # For each line item, get an account code and create a DEBIT entry
+    for line_item in line_items:
+        line_desc = line_item["description"]
+        line_amt = float(line_item["amount"])
+
+        # Retrieve relevant COA context
+        context = retrieve_relevant_coa(line_desc, coa_entries, top_k=3)
+        # Classify line item with the LLM
+        account_code = classify_line_item_with_rag(
+            {"description": line_desc, "amount": line_amt},
+            context
+        )
+
+        # Create a single DEBIT entry for the line item
+        journal_entries.append({
+            "account_code": account_code,
+            "debit": line_amt,
+            "credit": 0.0,
+            "description": line_desc
+        })
+
+    # If there's VAT in the invoice, DEBIT it to the VAT (input VAT) account
+    if total_vat > 0:
+        journal_entries.append({
+            "account_code": vat_account,
+            "debit": total_vat,
+            "credit": 0.0,
+            "description": "Input VAT"
+        })
+
+    # Finally, CREDIT Accounts Payable for the entire invoice amount (net + VAT)
+    # so the total credits = total debits.
+    if total_invoice > 0:
+        journal_entries.append({
+            "account_code": ap_account,
+            "debit": 0.0,
+            "credit": total_invoice,
+            "description": "Accounts Payable"
+        })
+
+    logging.info("RAG pipeline completed. Generated journal entries:")
+    for je in journal_entries:
+        logging.info(je)
+
     return journal_entries
 

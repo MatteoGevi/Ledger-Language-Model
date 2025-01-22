@@ -15,7 +15,10 @@ This Accounting Agent follows accounting principle strictly linked to the [Germa
 To launch the agent and sort out the entries of any invoice for accounting, you can run from your terminal the following.
 
 ```bash
+curl -sSL https://install.python-poetry.org | python3 -
 poetry install
+export PATH="/Users/username/.local/bin:$PATH"
+poetry shell
 export OPENAI_API_KEY="your_openai_api_key_here"
 poetry run python src/main.py
 ```
@@ -35,13 +38,19 @@ To demonstrate the system's behavior, we include the following tests for parsing
 5. **RAG Pipeline Integration**:
    - To test the end-to-end behavior of the RAG pipeline, from text extraction to journal entry generation..
 6. **Evaluation Framework**:
-   - To validate the performance of the agent using the evaluation framework.
+   - To validate the performance of the agent using a tailored evaluation framework.
 
 To run the test locally, you can run the following command in your Terminal inside the current repository:
 
 ```bash
-poetry run python test/test_agent.py
+poetry run pytest test/test_agent.py
 ```
 
 For each test case, detailed logs are generated, providing insights into the behavior of the system. The logs include:
 
+# Final Considerations
+This use case comes in handy since there are no Zero Shot models available on Hugging Face to assess invoices and insert them in journal entry respecting the German CAAP. 
+Although, a model like [FinBERT](https://huggingface.co/ProsusAI/finbert) is already trained on financial data but without being compliant specifically for the client in the scope of this repository. 
+Other Document AI models that can be leveraged in some part of our workflow includes LayoutLM, Donut, or a generic OCR pipeline for extracting structured invoice data.
+
+German GAAP (HGB) is fairly specific. A model would need domain training data with invoices, ledgers, and correct classification examples for Germany, which is not typically open-sourced and this is where the value propoposition of Emblematic comes in handy. Training such a framework like in the repo with different invoices can achieve a higher accuracy level and create a model that can be used in the German market for journal entry procedures. 

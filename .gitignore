@@ -1,0 +1,20 @@
+# Ignore Python cache and compiled files
+__pycache__/
+*.py[cod]
+
+# Ignore log files
+*.log
+logs/
+
+# Ignore virtual environment
+venv/
+.venv/
+
+# macOS Finder files
+.DS_Store
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Optional: Ignore environment/credential files
+.env
