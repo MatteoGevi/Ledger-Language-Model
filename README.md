@@ -48,7 +48,7 @@ poetry run pytest test/test_agent.py
 
 For each test case, detailed logs are generated, providing insights into the behavior of the system.
 
-# Final Considerations
+### Final Considerations
 This use case comes in handy since there are no Zero Shot models available on Hugging Face to assess invoices and insert them in journal entry respecting the German CAAP. 
 Although, a model like [FinBERT](https://huggingface.co/ProsusAI/finbert) is already trained on financial data but without being compliant specifically for the client in the scope of this repository. 
 Other Document AI models that can be leveraged in some part of our workflow includes LayoutLM, Donut, or a generic OCR pipeline for extracting structured invoice data.
