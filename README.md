@@ -1,4 +1,4 @@
-# Emblematic-Accounting-Agent
+# Ledger Language Model
 
 The following agent takes the accounting data from one sample invoice and sort them into journal entries automatically.
 
@@ -47,13 +47,3 @@ poetry run pytest test/test_agent.py
 ```
 
 For each test case, detailed logs are generated, providing insights into the behavior of the system.
-
-### Final Considerations
-This use case comes in handy since there are no Zero Shot models available on Hugging Face to assess invoices and insert them in journal entry respecting the German CAAP. 
-
-Although, a model like [FinBERT](https://huggingface.co/ProsusAI/finbert) is already trained on financial data but without being compliant specifically for the client in the scope of this repository. 
-Other Document AI models that can be leveraged in some part of our workflow includes LayoutLM, Donut, or a generic OCR pipeline for extracting structured invoice data.
-
-German GAAP (HGB) is fairly specific. A model would need domain training data with invoices, ledgers, and correct classification examples for Germany, which is not typically open-sourced and this is where the value propoposition of Emblematic comes in handy. 
-
-Training such a framework like in the repo with different invoices can achieve a higher accuracy level and create a model that can be used in the German market for journal entry procedures. 
